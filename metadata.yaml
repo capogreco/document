@@ -50,15 +50,18 @@ header-includes:
   - |
     ```{=latex}
     % Epigraphs: section-opener quotes with right-flush attribution
+    % Custom definition — no external package required
     % Usage in markdown:  \epigraph{Quote text.}{--- Author, \emph{Source} (Year)}
-    \usepackage{epigraph}
-    \setlength{\epigraphwidth}{0.55\textwidth}
-    \renewcommand{\epigraphflush}{flushright}
-    \renewcommand{\textflush}{flushright}
-    \renewcommand{\sourceflush}{flushright}
-    \renewcommand{\epigraphrule}{0pt}
-    \setlength{\epigraphsize}{\small}
-    \setlength{\beforeepigraphskip}{1em}
-    \setlength{\afterepigraphskip}{2em}
+    \newcommand{\epigraph}[2]{%
+      \par\vspace{1em}%
+      \begin{flushright}%
+      \begin{minipage}{0.55\textwidth}%
+        \raggedleft\small\itshape #1\par%
+        \vspace{0.5em}%
+        \normalfont\small #2%
+      \end{minipage}%
+      \end{flushright}%
+      \vspace{2em}%
+    }
     ```
 ---

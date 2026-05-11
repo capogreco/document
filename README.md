@@ -192,7 +192,7 @@ To change this, edit the `header-includes` section in `metadata.yaml`.
 
 ## Epigraphs
 
-The template loads the `epigraph` LaTeX package for section-opener quotes with right-flush attribution. Use raw LaTeX directly in your markdown:
+The template defines a small `\epigraph{}{}` macro inline (no external package required) for section-opener quotes with right-flush attribution. Use raw LaTeX directly in your markdown:
 
 ```markdown
 ## Section Title
