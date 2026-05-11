@@ -56,6 +56,7 @@ make watch    # Watch for changes and auto-rebuild (requires entr)
 - `deno.json` - Deno task configuration
 - `.env` - API keys for `deno task search` (gitignored — see *Search & Discovery*)
 - `*.csl` - Citation style files (APA, Chicago variants)
+- `epigraph.lua` - Pandoc Lua filter for the `::: epigraph` markdown syntax
 - `document.pdf` - Generated output
 - `.zed/settings.json` - Project-local Zed settings (Markdown autocomplete disabled)
 
@@ -192,15 +193,35 @@ To change this, edit the `header-includes` section in `metadata.yaml`.
 
 ## Epigraphs
 
-The template defines a small `\epigraph{}{}` macro inline (no external package required) for section-opener quotes with right-flush attribution. Use raw LaTeX directly in your markdown:
+The template provides two ways to set an epigraph (section-opener quote with right-flush attribution):
+
+### Markdown-native syntax (recommended)
+
+Use a fenced div with class `epigraph`. The last paragraph is treated as the attribution; everything prior is the quote. Citations inside the div use ordinary Pandoc syntax and are resolved against `bibliography.bib`:
 
 ```markdown
 ## Section Title
 
-\epigraph{The quote text goes here, italicised automatically by the package.}{--- Author Name, \emph{Source Title} (Year)}
+::: epigraph
+The quote text, with full markdown — *emphasis*, citations, etc.
+
+--- @authorKey [p. 42]
+:::
 
 Body text begins here…
 ```
+
+This compiles to the same `\epigraph{}{}` macro as the raw form below; the conversion is handled by `epigraph.lua` (a small Pandoc Lua filter) which runs after citeproc so citations are already rendered before the macro arguments are built. For non-LaTeX outputs (HTML/EPUB) the div passes through unchanged so you can style `.epigraph` with CSS.
+
+### Raw LaTeX syntax (also works)
+
+If you'd rather call the macro directly:
+
+```markdown
+\epigraph{The quote text goes here, italicised automatically.}{--- Author Name, \emph{Source Title} (Year)}
+```
+
+### Plain blockquote
 
 For an inline blockquote that sits inside the argument's flow (rather than above it as an epigraph), use standard markdown:
 
@@ -210,7 +231,7 @@ For an inline blockquote that sits inside the argument's flow (rather than above
 > — Author, *Source*
 ```
 
-Epigraph styling (width, flush, font size, spacing) is configured in `metadata.yaml`.
+Epigraph styling (width, flush, font size, spacing) is configured by the macro definition in `metadata.yaml`.
 
 ## Citations in Markdown
 

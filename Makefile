@@ -14,6 +14,7 @@ PANDOC_FLAGS = \
 	--number-sections \
 	--toc \
 	--citeproc \
+	--lua-filter=epigraph.lua \
 	--metadata-file=$(METADATA)
 
 # Default target
@@ -22,7 +23,7 @@ all: pdf
 # Generate PDF with bibliography
 pdf: $(OUTPUT)
 
-$(OUTPUT): $(SOURCE) $(BIBLIOGRAPHY) $(CSL) $(METADATA)
+$(OUTPUT): $(SOURCE) $(BIBLIOGRAPHY) $(CSL) $(METADATA) epigraph.lua
 	pandoc $(SOURCE) -o $(OUTPUT) $(PANDOC_FLAGS) 2>/dev/null || \
 	pandoc $(SOURCE) -o $(OUTPUT) $(PANDOC_FLAGS)
 
