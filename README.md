@@ -57,6 +57,7 @@ make watch    # Watch for changes and auto-rebuild (requires entr)
 - `.env` - API keys for `deno task search` (gitignored — see *Search & Discovery*)
 - `*.csl` - Citation style files (APA, Chicago variants)
 - `document.pdf` - Generated output
+- `.zed/settings.json` - Project-local Zed settings (Markdown autocomplete disabled)
 
 ## Managing Bibliography
 
@@ -184,6 +185,10 @@ To change styles, edit the `csl` field in `metadata.yaml`.
 By default, paragraphs are indented (1.5em) with no space between them, except the first paragraph after a section heading is not indented (classic academic style).
 
 To change this, edit the `header-includes` section in `metadata.yaml`.
+
+## Editor Settings
+
+`.zed/settings.json` disables Markdown autocomplete (`show_completions_on_input`) and AI edit predictions (`show_edit_predictions`) for this project. This keeps prose writing free of code-style popups while leaving manual completions (Ctrl-Space) available if you want them. Project-level settings merge with your user settings — other Zed preferences are unaffected.
 
 ## Epigraphs
 
