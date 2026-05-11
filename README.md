@@ -213,6 +213,17 @@ Body text begins here…
 
 This compiles to the same `\epigraph{}{}` macro as the raw form below; the conversion is handled by `epigraph.lua` (a small Pandoc Lua filter) which runs after citeproc so citations are already rendered before the macro arguments are built. For non-LaTeX outputs (HTML/EPUB) the div passes through unchanged so you can style `.epigraph` with CSS.
 
+**Forcing a line break mid-quote.** If you want to balance the line breaks inside the quote manually, use Pandoc's escaped-line-break syntax — `\` at end of line, or two trailing spaces. *Do not* use `\\` inline: Pandoc parses `\\` as an escape for a literal backslash, not a line break, and it will render as a stray `\textbackslash{}` (often appearing as `|` in italic body fonts).
+
+```markdown
+::: epigraph
+... there are multiple lineages and paths\
+being traveled herein.
+
+--- @authorKey [p. 42]
+:::
+```
+
 ### Raw LaTeX syntax (also works)
 
 If you'd rather call the macro directly:
