@@ -54,13 +54,13 @@ header-includes:
     % Usage in markdown:  \epigraph{Quote text.}{--- Author, \emph{Source} (Year)}
     \newcommand{\epigraph}[2]{%
       \par\vspace{1em}%
-      \begin{flushright}%
-      \begin{minipage}{0.55\textwidth}%
-        \raggedleft\small\itshape #1\par%
+      \begin{center}%
+      \begin{minipage}{0.6\textwidth}%
+        {\sloppy\setlength{\emergencystretch}{3em}\centering\small\itshape #1\par}%
         \vspace{0.5em}%
-        \normalfont\small #2%
+        {\raggedleft\small #2\par}%
       \end{minipage}%
-      \end{flushright}%
+      \end{center}%
       \vspace{2em}%
     }
     ```

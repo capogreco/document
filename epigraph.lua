@@ -11,8 +11,9 @@
 --   :::
 --
 -- The last paragraph in the div is treated as the attribution; everything
--- prior is the quote. A div with a single paragraph is treated as a quote
--- with no attribution.
+-- prior is the quote. The blank line between quote and attribution is
+-- required — this is the same convention as markdown blockquote attribution.
+-- A div with a single paragraph is treated as a quote with no attribution.
 --
 -- For non-LaTeX outputs the div is passed through unchanged so HTML/EPUB
 -- builds can style `.epigraph` with CSS.
@@ -27,7 +28,6 @@ local function block_to_latex_inlines(block)
   if block.t == "Para" or block.t == "Plain" then
     return inlines_to_latex(block.content)
   end
-  -- Fallback for unexpected block types: stringify
   return pandoc.utils.stringify(block)
 end
 
