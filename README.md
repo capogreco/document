@@ -1,6 +1,6 @@
 # Academic Document Template
 
-A markdown-based workflow for generating academic PDF documents with bibliography support, automated builds, and citation management.
+A markdown-based workflow for generating academic documents — PDF or Word `.docx` — with bibliography support, automated builds, and citation management.
 
 ## Quick Start
 
@@ -39,10 +39,41 @@ pandoc document.md -o document.pdf --bibliography=bibliography.bib --csl=apa.csl
 ### Other Make Commands
 
 ```bash
-make clean    # Remove generated PDF
+make docx     # Build every document as Word .docx
+make clean    # Remove generated PDF and .docx files
 make open     # Build and open PDF (macOS)
 make watch    # Watch for changes and auto-rebuild (requires entr)
 ```
+
+## Building Word (.docx)
+
+For submissions that require a Word document:
+
+```bash
+make docx            # builds every *.md → same-named .docx
+make article.docx    # or build one specific file
+```
+
+The `.docx` build runs the same content pipeline as the PDF — bibliography,
+APA (or your chosen CSL) citations, numbered sections, and a table of
+contents all carry through. It just omits the LaTeX engine, so the
+LaTeX-specific customizations in `metadata.yaml` (section-numbering tweaks,
+the epigraph macro, etc.) are ignored rather than errored on. Epigraphs
+degrade gracefully to plain quote + attribution paragraphs.
+
+### Word styling
+
+By default pandoc applies its own clean built-in styles. To match a
+publisher's house style, drop a `reference.docx` into the project root — the
+build auto-detects it (`--reference-doc`) with no other changes. To create a
+starter you can edit in Word:
+
+```bash
+pandoc -o reference.docx --print-default-data-file reference.docx
+```
+
+Edit its heading/body styles in Word, save it as `reference.docx` in the
+project root, and subsequent `make docx` builds will use it.
 
 ## File Structure
 
@@ -57,7 +88,8 @@ make watch    # Watch for changes and auto-rebuild (requires entr)
 - `.env` - API keys for `deno task search` (gitignored — see *Search & Discovery*)
 - `*.csl` - Citation style files (APA, Chicago variants)
 - `epigraph.lua` - Pandoc Lua filter for the `::: epigraph` markdown syntax
-- `document.pdf` - Generated output
+- `document.pdf` / `document.docx` - Generated output (PDF and/or Word)
+- `reference.docx` - Optional Word style template (auto-detected if present)
 - `.zed/settings.json` - Project-local Zed settings (Markdown autocomplete disabled)
 
 ## Managing Bibliography
